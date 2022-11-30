@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CutHoleTri : MonoBehaviour
+public class CutHoleCollide : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -45,8 +45,28 @@ public class CutHoleTri : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 1000.0f))
             {
+                Debug.Log(hit.point);
+                Debug.Log(ray.direction);
                 DeleteTri(hit.triangleIndex);
             }
         }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        ContactPoint[] contacts = collision.contacts;
+
+        Debug.Log("HIt");
+
+        ContactPoint contact = contacts[0];
+            Debug.Log(contact.normal);
+            Debug.Log(contact.point);
+            Ray ray = new Ray(contact.point-contact.normal, contact.normal);
+            RaycastHit rayHit;
+
+            if(GetComponent<Collider>().Raycast(ray, out rayHit, 100f))
+            {
+                DeleteTri(rayHit.triangleIndex);
+            }
     }
 }
