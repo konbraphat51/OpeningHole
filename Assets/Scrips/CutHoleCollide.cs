@@ -58,15 +58,15 @@ public class CutHoleCollide : MonoBehaviour
 
         Debug.Log("HIt");
 
+        //foreach(ContactPoint contact in contacts)
+        //Å™Don't work; many irrelevant triangles will be deleted
         ContactPoint contact = contacts[0];
-            Debug.Log(contact.normal);
-            Debug.Log(contact.point);
-            Ray ray = new Ray(contact.point-contact.normal, contact.normal);
-            RaycastHit rayHit;
+        Ray ray = new Ray(contact.point-contact.normal, contact.normal);
+        RaycastHit rayHit;
 
-            if(GetComponent<Collider>().Raycast(ray, out rayHit, 100f))
-            {
-                DeleteTri(rayHit.triangleIndex);
-            }
+        if(GetComponent<Collider>().Raycast(ray, out rayHit, 100f))
+        {
+            DeleteTri(rayHit.triangleIndex);
+        }
     }
 }
